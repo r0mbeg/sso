@@ -1,0 +1,19 @@
+# Binaries
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+
+# Build and test
+/bin/
+/build/
+/dist/
+/coverage.out
+
+# IDE
+.idea/
+.vscode/
+
+# System
+.DS_Store
