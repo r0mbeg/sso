@@ -25,15 +25,7 @@ func main() {
 
 	log := setupLogger(cfg.Env)
 
-	log.Info("starting app",
-		slog.String("env", cfg.Env),
-		slog.Any("config", cfg),
-		slog.Int("port", cfg.GRPC.Port),
-	)
-
-	log.Debug("debug message")
-
-	log.Error("error message")
+	log.Info("starting app", slog.Any("config", cfg))
 
 	// TODO: init app
 

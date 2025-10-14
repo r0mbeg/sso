@@ -3,13 +3,13 @@ module sso
 go 1.20
 
 require (
+	github.com/fatih/color v1.18.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
-	golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b
+	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691
 )
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/fatih/color v1.18.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
