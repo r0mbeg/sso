@@ -4,11 +4,11 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/exp/slog"
 	"os"
+	app "sso/internal/app"
 	"sso/internal/config"
 	"sso/internal/lib/logger/handlers/slogpretty"
-
-	"golang.org/x/exp/slog"
 )
 
 const (
@@ -27,9 +27,9 @@ func main() {
 
 	log.Info("starting app", slog.Any("config", cfg))
 
-	// TODO: init app
+	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
 
-	// TODO: run gRPC server
+	application.GRPCSrv.MustRun()
 
 }
 
