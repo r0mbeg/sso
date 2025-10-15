@@ -17,6 +17,7 @@ const (
 	envProd  = "prod"
 )
 
+// go run cmd/sso/main.go --config=./config/local.yaml
 func main() {
 
 	cfg := config.MustLoad()
