@@ -1,14 +1,14 @@
-//go:build !go1.21
-
 package main
 
 import (
 	"fmt"
-	"golang.org/x/exp/slog"
+	"log/slog"
 	"os"
+	"os/signal"
 	app "sso/internal/app"
 	"sso/internal/config"
 	"sso/internal/lib/logger/handlers/slogpretty"
+	"syscall"
 )
 
 const (
@@ -29,8 +29,18 @@ func main() {
 
 	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
 
-	application.GRPCSrv.MustRun()
+	go application.GRPCSrv.MustRun()
 
+	// graceful shutdown
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+
+	// block main
+	sign := <-stop
+
+	log.Info("received shutdown signal", slog.String("signal", sign.String()))
+	application.GRPCSrv.Stop()
+	log.Info("app stopped")
 }
 
 func setupLogger(env string) *slog.Logger {

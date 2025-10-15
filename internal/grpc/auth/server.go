@@ -19,6 +19,9 @@ func (s *serverAPI) Login(
 	ctx context.Context,
 	req *ssov1.LoginRequest,
 ) (*ssov1.LoginResponse, error) {
+	/*if req.GetEmail() == "" {
+		return nil, status.Error(codes.InvalidArgument, "email required")
+	}*/
 	panic("implement me")
 }
 

@@ -4,7 +4,7 @@ import (
 	grpcapp "sso/internal/app/grpc"
 	"time"
 
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 type App struct {
