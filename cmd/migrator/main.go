@@ -10,7 +10,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-// TODO: add this to Taskfile.yaml
+// TODO: add this to Taskfile.yaml task migrate db
 // go run ./cmd/migrator --storage-path=./storage/sso.db --migrations-path=./migrations
 func main() {
 	var storagePath, migrationsPath, migrationsTable string

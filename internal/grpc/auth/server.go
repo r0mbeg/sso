@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"sso/internal/services/auth"
-	"sso/internal/storage"
 
 	ssov1 "github.com/r0mbeg/protos/gen/go/sso"
 	"google.golang.org/grpc"
@@ -76,7 +75,7 @@ func (s *serverAPI) Register(
 
 	userID, err := s.auth.RegisterNewUser(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
-		if errors.Is(err, storage.ErrUserExists) {
+		if errors.Is(err, auth.ErrUserExists) {
 			return nil, status.Error(codes.AlreadyExists, "user already exists")
 		}
 		return nil, status.Error(codes.Internal, "internal server error")
@@ -97,7 +96,7 @@ func (s *serverAPI) IsAdmin(
 
 	isAdmin, err := s.auth.IsAdmin(ctx, req.GetUserId())
 	if err != nil {
-		if errors.Is(err, storage.ErrUserNotFound) {
+		if errors.Is(err, auth.ErrUserNotFound) {
 			return nil, status.Error(codes.NotFound, "user not found")
 		}
 		return nil, status.Error(codes.Internal, "internal server error")
@@ -110,15 +109,15 @@ func (s *serverAPI) IsAdmin(
 
 func validateLoginRequest(req *ssov1.LoginRequest) error {
 	if req.GetEmail() == "" {
-		return status.Error(codes.InvalidArgument, "email required")
+		return status.Error(codes.InvalidArgument, "email is required")
 	}
 
 	if req.GetPassword() == "" {
-		return status.Error(codes.InvalidArgument, "password required")
+		return status.Error(codes.InvalidArgument, "password is required")
 	}
 
 	if req.GetAppId() == emptyValue {
-		return status.Error(codes.InvalidArgument, "app_id required")
+		return status.Error(codes.InvalidArgument, "app_id is required")
 	}
 
 	return nil
@@ -126,18 +125,18 @@ func validateLoginRequest(req *ssov1.LoginRequest) error {
 
 func validateRegisterRequest(req *ssov1.RegisterRequest) error {
 	if req.GetEmail() == "" {
-		return status.Error(codes.InvalidArgument, "email required")
+		return status.Error(codes.InvalidArgument, "email is required")
 	}
 
 	if req.GetPassword() == "" {
-		return status.Error(codes.InvalidArgument, "password required")
+		return status.Error(codes.InvalidArgument, "password is required")
 	}
 	return nil
 }
 
 func validateIsAdminRequest(req *ssov1.IsAdminRequest) error {
 	if req.GetUserId() == emptyValue {
-		return status.Error(codes.InvalidArgument, "user_id required")
+		return status.Error(codes.InvalidArgument, "user_id is required")
 	}
 	return nil
 }
